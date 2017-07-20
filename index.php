@@ -1,20 +1,40 @@
 <?php
 	// error_reporting(0);
 	// Include external files
-	include("includes/functions/connection.php");
-	include("includes/functions/register.php");
-
+	require ("includes/connection.php");
+	require ("includes/engine.php");
+	// instanciate of engine class
+	$myEngine = new engine($conn);
+	
 	if (isset ($_POST["create"])){
 
 		if(empty($_POST["sex"])) {
 			$sexError = "Please select one!";
 		} 
 		else {
+			
 			// call the registerUsers function
-			registerUsers($_POST["firstName"], $_POST["surname"], $_POST["email"],  $_POST["password"], $_POST["birthday"], $_POST["sex"] );
+			$myEngine->registerUsers($_POST["firstName"], $_POST["surname"], $_POST["email"],  $_POST["password"], $_POST["birthday"], $_POST["sex"] );
 		}
 	
 	}
+
+	if (isset ($_POST["login"])) {
+
+		if (empty($_POST["email"]) && empty($_POST["password"])) {
+			$loginError = "Please enter your Login details!";
+		} 
+			else if (empty($_POST["email"])) {
+			$loginError = "Please enter your Email!";
+		} 
+			else if (empty($_POST["password"])) {
+			$loginError = "Please enter your Password!";
+		} 
+			else {
+			$login = $myEngine->login($_POST["email"], $_POST["password"]);
+		}
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +61,8 @@
 						
 					</div>
 					
-					<form class="form-inline _form pull-right">
+					<form class="form-inline _form pull-right" method="post">
+						<span class="label-a"><h5><?php if(!empty($loginError)) {echo $loginError;} else if (!empty($login)){echo $login;} ?></h5></span>
 						<div class="form-group">
 							<label class="label-a" title="Enter email">Email</label>
 							<input class="form-control input-sm form-a" type="email" name="email">
@@ -51,7 +72,7 @@
 							<input class="form-control input-sm form-a" type="password" id="password" name="password">
 						</div>
 						<div class="form-group">
-							<input class="button btn btn-sm" type="submit" name="submit" title="Log in to your account" value="Log In">
+							<input class="button btn btn-sm" type="submit" name="login" title="Log in to your account" value="Log In">
 						</div>
 						<a href="#" title="Get new password"><div class="muted">Forgotten Password?</div></a>
 					</form>
@@ -62,6 +83,7 @@
 		<!-- Main section -->
 		<section class="container-fluid main">
 			<div class="">
+				
 				<div class="col-md-4 col-sm-5 col-lg-5 col-lg-offset-1">
 					<h3 class="greeting">Facebook helps you connect and share with the people in your life.</h3>
 					<img src="assets/img/connected.png" alt="connecting different people around the globe">

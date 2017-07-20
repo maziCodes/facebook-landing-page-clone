@@ -1,9 +1,12 @@
 <?php
 
-	include("includes/functions/getUsers.php");
-	getUsers();
-	$result = getUsers();
-	$row = mysqli_fetch_assoc($result);
+	require ("includes/connection.php");
+	require ("includes/engine.php");
+	// instanciate of engine class
+	$myEngine = new engine($conn);
+
+	$result = $myEngine->getUsers();
+
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +25,16 @@
 		<br>
 		<div class="alert alert-success">
 			<h4 class="text-success">List of Users</h4>
-			<span class="pull-right text-danger"><a href="index.php" title="Go to Home"><i class="fa fa-home">Home</i></a></span>
+			<span class="pull-right text-danger">
+				<a href="index.php" title="Go to Home">
+					<i class="fa fa-home">Home</i>
+				</a>
+			</span>
 		</div>
 			<div class="row">
 				<?php
 					// If we have data
-					if (mysqli_num_rows($result) > 0) {
+					if ($result->num_rows>0) {
 							// output the data
 							echo "<table class='table table-hover'>
 							<tr><th class='text-center'>ID</th>
@@ -37,7 +44,7 @@
 								<th class='text-center'>Birthday</th>
 								<th class='text-center'>Sex</th>
 							</tr>";
-						while ($row = mysqli_fetch_assoc($result)) {
+						while ($row = $result->fetch_assoc()) {
 							//print_r($row);
 							echo "<tr class='text-center'><td>".$row["id"]."</td><td>".$row["firstName"]."</td><td>"
 									.$row["surname"]."</td><td>".$row["email"]."</td><td>".$row["birthday"].
