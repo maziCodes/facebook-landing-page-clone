@@ -1,41 +1,6 @@
 <?php
-	// error_reporting(0);
-	// Include external files
-	require ("includes/connection.php");
-	require ("includes/engine.php");
-	// instanciate of engine class
-	$myEngine = new engine($conn);
-	
-	if (isset ($_POST["create"])){
-
-		if(empty($_POST["sex"])) {
-			$sexError = "Please select one!";
-		} 
-		else {
-			
-			// call the registerUsers function
-			$myEngine->registerUsers($_POST["firstName"], $_POST["surname"], $_POST["email"],  $_POST["password"], $_POST["birthday"], $_POST["sex"] );
-		}
-	
-	}
-
-	if (isset ($_POST["login"])) {
-
-		if (empty($_POST["email"]) && empty($_POST["password"])) {
-			$loginError = "Please enter your Login details!";
-		} 
-			else if (empty($_POST["email"])) {
-			$loginError = "Please enter your Email!";
-		} 
-			else if (empty($_POST["password"])) {
-			$loginError = "Please enter your Password!";
-		} 
-			else {
-			$login = $myEngine->login($_POST["email"], $_POST["password"]);
-		}
-	}
-
-?>
+session_start();
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,8 +26,8 @@
 						
 					</div>
 					
-					<form class="form-inline _form pull-right" method="post">
-						<span class="label-a"><h5><?php if(!empty($loginError)) {echo $loginError;} else if (!empty($login)){echo $login;} ?></h5></span>
+					<form class="form-inline _form pull-right" method="post" action="includes/operations/login.php">
+						<span class="label-a"><h5><?php if(!empty($_SESSION['error'])){ echo $_SESSION['error']; } ?></h5></span>
 						<div class="form-group">
 							<label class="label-a" title="Enter email">Email</label>
 							<input class="form-control input-sm form-a" type="email" name="email">
@@ -115,7 +80,7 @@
 									<input type="date" class="birthday" name="birthday" required>
 									<div class="_birth"><a href="#"><small>Why do I need to provide my<br> date of birth?</small></a></div>
 								</div>
-								<small class="text-danger"><strong><?php if(!empty($sexError)){echo $sexError;} ?></strong></small>
+								<small class="text-danger"><strong><?php  ?></strong></small>
 								<div class="user-sex">
 									<input type="radio" name="sex" value="F" class="user-sex-a"><span>Female</span>
 									<input type="radio" name="sex" value="M" class="user-sex-a"><span>Male</span>

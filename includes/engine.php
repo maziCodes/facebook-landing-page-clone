@@ -14,11 +14,18 @@
 			$details = $result->fetch_assoc();
 			// validate login
 			if ($result->num_rows>0){
-				$login = "Welcome, ".$details['firstName'];
-				return $login;
+				session_start();
+				while($row = $details){
+					$_SESSION["user_id"] = $row['id'];
+					$_SESSION["user_name"] = $row['firstName'];
+					break;
+				}
+				header('Location:http://localhost/facebook-landing-page/successpage.php');
 			}
 			else { $login = "Email or Password incorrect";
-				return $login;
+				session_start();
+				$_SESSION["error"] = "Email or password incorrect!";
+				header('Location:http://localhost/facebook-landing-page/index.php');
 			}
 		}
 
